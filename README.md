@@ -170,9 +170,13 @@ Refer to the Makefile inline documentation for more details.
 
 ### Running the Marxan Cloud platform
 
-Run `make start` to start all the services.
+Run `make start-api` to start the MarxanCloud API services in containers, via
+Docker Compose.
 
-Run `make start-api` to start api services.
+To enable the Node inspector while running the MarxanCloud API services in
+containers, use `make debug-api` instead. Example configuration files for
+debugger setup in popular editors are provided in the `docs/developers/editors/`
+documentation folder.
 
 ### Running the notebooks
 
@@ -197,8 +201,6 @@ or if you only wants to populate the newly fresh instance with a small subset of
 ``` bash
 make seed-dbs
 ```
-
-
 
 We also provide a way to freshly clean the dbs instances(we recommend do it regularly):
 
