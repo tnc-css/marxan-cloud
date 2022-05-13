@@ -9,6 +9,9 @@ import { LegacyProjectImportComponentEntity } from '../infra/entities/legacy-pro
 import { LegacyProjectImportFileEntity } from '../infra/entities/legacy-project-import-file.api.entity';
 import { LegacyProjectImportEntity } from '../infra/entities/legacy-project-import.api.entity';
 import { LegacyProjectImportTypeormRepository } from '../infra/legacy-project-import-typeorm.repository';
+import { MarkLegacyProjectImportAsFailedHandler } from './mark-legacy-project-import-as-failed.handler';
+import { MarkLegacyProjectImportPieceAsFailedHandler } from './mark-legacy-project-import-piece-as-failed.handler';
+import { StartLegacyProjectImportHandler } from './start-legacy-project-import.handler';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { LegacyProjectImportTypeormRepository } from '../infra/legacy-project-im
       provide: LegacyProjectImportRepository,
       useClass: LegacyProjectImportTypeormRepository,
     },
+    MarkLegacyProjectImportAsFailedHandler,
+    MarkLegacyProjectImportPieceAsFailedHandler,
+    StartLegacyProjectImportHandler,
   ],
 })
 export class LegacyProjectImportApplicationModule {}

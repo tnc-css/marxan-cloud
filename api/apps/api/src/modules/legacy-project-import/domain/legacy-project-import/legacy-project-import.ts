@@ -179,13 +179,15 @@ export class LegacyProjectImport extends AggregateRoot {
 
   markPieceAsFailed(
     pieceId: LegacyProjectImportComponentId,
+    errors: string[] = [],
+    warnings: string[] = [],
   ): Either<MarkLegacyProjectImportPieceAsFailedErrors, true> {
     const piece = this.pieces.find((pc) => pc.id.value === pieceId.value);
     if (!piece) return left(legacyProjectImportComponentNotFound);
     if (piece.hasFailed())
       return left(legacyProjectImportComponentAlreadyFailed);
 
-    piece.markAsFailed();
+    piece.markAsFailed(errors, warnings);
 
     const hasThisBatchFinished = this.hasBatchFinished(piece.order);
     const hasThisBatchFailed = this.hasBatchFailed(piece.order);
@@ -199,6 +201,7 @@ export class LegacyProjectImport extends AggregateRoot {
 
   completePiece(
     pieceId: LegacyProjectImportComponentId,
+    warnings?: string[],
   ): Either<
     CompleteLegacyProjectImportPieceErrors,
     CompleteLegacyProjectImportPieceSuccess
@@ -212,7 +215,7 @@ export class LegacyProjectImport extends AggregateRoot {
 
     this.apply(new LegacyProjectImportPieceImported(this.id, pieceId));
 
-    pieceToComplete.complete();
+    pieceToComplete.complete(warnings);
 
     const isThisTheLastBatch = this.isLastBatch(pieceToComplete.order);
     const hasThisBatchFinished = this.hasBatchFinished(pieceToComplete.order);
