@@ -19,6 +19,7 @@ import { GeoFeatureGeometry } from '@marxan/geofeatures';
 import { apiConnections } from '@marxan-api/ormconfig';
 import { GivenScenarioExists } from '../../steps/given-scenario-exists';
 import { DbConnections } from '@marxan-api/ormconfig.connections';
+import { FeatureAmountsPerPlanningUnitEntity } from '@marxan/feature-amounts-per-planning-unit';
 
 let fixtures: FixtureType<typeof getFixtures>;
 
@@ -156,6 +157,8 @@ const getFixtures = async () => {
   const featuresDataRepo: Repository<GeoFeatureGeometry> = app.get(
     getRepositoryToken(GeoFeatureGeometry, DbConnections.geoprocessingDB),
   );
+  const featureAmountsPerPlanningUnitRepo: Repository<FeatureAmountsPerPlanningUnitEntity> =
+    app.get(getRepositoryToken(FeatureAmountsPerPlanningUnitEntity));
   const scenarioRepo: Repository<Scenario> = app.get(
     getRepositoryToken(Scenario),
   );
